@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:review_provider_sqlite/app/core/extensions/theme_extension.dart';
 
 class TodoListLogo extends StatelessWidget {
   const TodoListLogo({super.key});
@@ -14,7 +15,7 @@ class TodoListLogo extends StatelessWidget {
         ),
         Text(
           "Todo List",
-          style: Theme.of(context).textTheme.headlineSmall,
+          style: context.textTheme.headlineSmall,
         ),
       ],
     );

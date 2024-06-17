@@ -34,6 +34,7 @@ class _AppWidgetState extends State<AppWidget> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Todo List",
+      initialRoute: "/login",
       routes: {
         "/": (_) => const SplashPage(),
         ...AuthModule().routers,

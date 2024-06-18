@@ -4,7 +4,7 @@ import '../todo_list_icons.dart';
 
 class TodoListField extends StatelessWidget {
 
-  final TextEditingController controller;
+  final TextEditingController? controller;
   final FormFieldValidator<String>? validator;
   final String label;
   final bool obscureText;
@@ -14,7 +14,7 @@ class TodoListField extends StatelessWidget {
 
   TodoListField({
     super.key,
-    required this.controller,
+    this.controller,
     this.validator,
     required this.label,
     this.obscureText = false,

@@ -87,7 +87,7 @@ class _LoginPageState extends State<LoginPage> {
                                   ),
                                 ),
                               ],
-                            )
+                            ),
                           ],
                         ),
                       )
@@ -124,12 +124,14 @@ class _LoginPageState extends State<LoginPage> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text(
+                                const Text(
                                   "Do not have an account?",
                                 ),
                                 TextButton(
-                                  onPressed: () {},
-                                  child: Text("SIGN UP"),
+                                  onPressed: () {
+                                    Navigator.of(context).pushNamed("/register");
+                                  },
+                                  child: const Text("SIGN UP"),
                                 ),
                               ],
                             ),

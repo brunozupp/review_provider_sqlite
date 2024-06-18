@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:review_provider_sqlite/app/core/ui/components/todo_list_logo.dart';
 import 'package:sign_in_button/sign_in_button.dart';
 
+import '../../../core/ui/components/todo_list_field.dart';
+
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -42,6 +44,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     const TodoListLogo(),
                     Form(
+                      key: _formKey,
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
                           vertical: 20,
@@ -49,14 +52,17 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         child: Column(
                           children: [
-                            TextFormField(
+                            TodoListField(
                               controller: _emailEC,
+                              label: "Email",
                             ),
                             const SizedBox(
                               height: 20,
                             ),
-                            TextFormField(
+                            TodoListField(
                               controller: _passwordEC,
+                              label: "Password",
+                              obscureText: true,
                             ),
                             const SizedBox(
                               height: 10,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:review_provider_sqlite/app/core/ui/components/todo_list_logo.dart';
+import 'package:sign_in_button/sign_in_button.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -65,7 +66,7 @@ class _LoginPageState extends State<LoginPage> {
                               children: [
                                 TextButton(
                                   onPressed: () {},
-                                  child: const Text("Esqueceu sua senha?"),
+                                  child: const Text("Forgot your password?"),
                                 ),
                                 ElevatedButton(
                                   onPressed: () {},
@@ -84,6 +85,51 @@ class _LoginPageState extends State<LoginPage> {
                           ],
                         ),
                       )
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Expanded(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFF0F3F7),
+                          border: Border(
+                            top: BorderSide(
+                              width: 2,
+                              color: Colors.grey.withAlpha(50),
+                            ),
+                          ),
+                        ),
+                        child: Column(
+                          children: [
+                            const SizedBox(
+                              height: 30,
+                            ),
+                            SignInButton(
+                              Buttons.google,
+                              text: "Continue with Google",
+                              onPressed: () {},
+                              padding: const EdgeInsets.all(5),
+                              shape: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(30),
+                                borderSide: BorderSide.none,
+                              ),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "Do not have an account?",
+                                ),
+                                TextButton(
+                                  onPressed: () {},
+                                  child: Text("SIGN UP"),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   ],
                 ),

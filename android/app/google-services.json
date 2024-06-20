@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "442445961131",
+    "project_id": "review-provider-sqlite",
+    "storage_bucket": "review-provider-sqlite.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:442445961131:android:40d1720334b72ff10ee4ee",
+        "android_client_info": {
+          "package_name": "br.com.novelitech.review_provider_sqlite"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "442445961131-jvg99h0o0m4sa1mbvunr34c8551pq0ak.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.novelitech.review_provider_sqlite",
+            "certificate_hash": "3eb1e1ff6c7d88adc6351a3b25b50d456a50a3ec"
+          }
+        },
+        {
+          "client_id": "442445961131-vmu6885f4h0d607atbekkijoh5o50s6n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBlL8Ve_PTUlJZ0IW5EwKeDhax0B8CIjh0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "442445961131-vmu6885f4h0d607atbekkijoh5o50s6n.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "442445961131-36llvrq14lvi8u439tb4kbmn4v0fnibv.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "br.com.novelitech.reviewProviderSqlite"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

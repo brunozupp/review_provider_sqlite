@@ -1,5 +1,8 @@
 plugins {
     id "com.android.application"
+    // START: FlutterFire Configuration
+    id 'com.google.gms.google-services'
+    // END: FlutterFire Configuration
     id "kotlin-android"
     // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
     id "dev.flutter.flutter-gradle-plugin"
@@ -23,7 +26,18 @@ if (flutterVersionName == null) {
     flutterVersionName = "1.0"
 }
 
+configurations.all {
+   resolutionStrategy {
+        eachDependency {
+            if ((requested.group == "org.jetbrains.kotlin")  &&(requested.name.startsWith("kotlin-stdlib"))) {
+                useVersion("1.8.22")
+            }
+        }
+    }
+}
+
 android {
+
     namespace = "br.com.novelitech.review_provider_sqlite"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion

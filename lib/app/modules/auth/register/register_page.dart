@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:review_provider_sqlite/app/core/extensions/theme_extension.dart';
 import 'package:review_provider_sqlite/app/core/ui/components/todo_list_field.dart';
 import 'package:review_provider_sqlite/app/core/ui/components/todo_list_logo.dart';
+import 'package:review_provider_sqlite/app/modules/auth/register/register_controller.dart';
+import 'package:validatorless/validatorless.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -24,6 +27,30 @@ class _RegisterPageState extends State<RegisterPage> {
     _confirmPasswordEC.dispose();
 
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    final controller = context.read<RegisterController>();
+
+    controller.addListener(() {
+      
+      final success = controller.success;
+      final error = controller.error;
+      
+      if(success) {
+        Navigator.of(context).pop();
+      } else if(error != null && error.isNotEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(error),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    });
   }
 
   @override
@@ -86,7 +113,11 @@ class _RegisterPageState extends State<RegisterPage> {
                 children: [
                   TodoListField(
                     controller: _emailEC, 
-                    label: "Email"
+                    label: "Email",
+                    validator: Validatorless.multiple([
+                      Validatorless.required("Email is required"),
+                      Validatorless.email("Email is invalid"),
+                    ]),
                   ),
                   const SizedBox(
                     height: 20,
@@ -95,6 +126,10 @@ class _RegisterPageState extends State<RegisterPage> {
                     controller: _passwordEC, 
                     label: "Password",
                     obscureText: true,
+                    validator: Validatorless.multiple([
+                      Validatorless.required("Password is required"),
+                      Validatorless.min(6, "Password must have at least 6 characters")
+                    ]),
                   ),
                   const SizedBox(
                     height: 20,
@@ -103,6 +138,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     controller: _confirmPasswordEC, 
                     label: "Confirm password",
                     obscureText: true,
+                    validator: Validatorless.compare(_passwordEC, "Confirm password must be the same as Password"),
                   ),
                   const SizedBox(
                     height: 20,
@@ -110,7 +146,21 @@ class _RegisterPageState extends State<RegisterPage> {
                   Align(
                     alignment: Alignment.bottomRight,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+
+                        final isValidForm = _formKey.currentState?.validate() ?? false;
+
+                        if(isValidForm) {
+
+                          final email = _emailEC.text;
+                          final password = _passwordEC.text;
+
+                          context.read<RegisterController>().registerUser(
+                            email: email,
+                            password: password,
+                          );
+                        }
+                      },
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),

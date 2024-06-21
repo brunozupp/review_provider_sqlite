@@ -1,29 +1,24 @@
 import 'dart:developer';
 
-import 'package:flutter/material.dart';
 import 'package:review_provider_sqlite/app/core/exceptions/auth_exception.dart';
+import 'package:review_provider_sqlite/app/core/notifier/default_change_notifier.dart';
 import 'package:review_provider_sqlite/app/services/user/user_service.dart';
 
-class RegisterController extends ChangeNotifier {
+class RegisterController extends DefaultChangeNotifier {
   
   final UserService _userService;
 
   RegisterController({
     required UserService userService,
   }) : _userService = userService;
-
-  String? error;
-
-  bool success = false;
-
   Future<void> registerUser({
     required String email,
     required String password,
   }) async {
 
     try {
-      error = null;
-      success = false;
+
+      resetStateAndShowLoading();
       notifyListeners();
       
       final user = await _userService.register(
@@ -33,18 +28,19 @@ class RegisterController extends ChangeNotifier {
       
       if(user != null) {
       
-        success = true;
+        success();
       
       } else {
 
-        error = "Error to register new user";
+        setError("Error to register new user");
       }
     } on AuthException catch (e, s) {
       log("RegisterController: ${e.message}", error: e, stackTrace: s);
       
-      error = e.message;
+      setError(e.message);
 
     } finally {
+      hideLoading();
       notifyListeners();
     }
   }

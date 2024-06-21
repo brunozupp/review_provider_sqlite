@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:review_provider_sqlite/app/core/extensions/theme_extension.dart';
+import 'package:review_provider_sqlite/app/core/notifier/default_listiner_notifier.dart';
 import 'package:review_provider_sqlite/app/core/ui/components/todo_list_field.dart';
 import 'package:review_provider_sqlite/app/core/ui/components/todo_list_logo.dart';
 import 'package:review_provider_sqlite/app/modules/auth/register/register_controller.dart';
@@ -33,23 +34,18 @@ class _RegisterPageState extends State<RegisterPage> {
   void initState() {
     super.initState();
 
-    final controller = context.read<RegisterController>();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final listenerNotifier = DefaultListinerNotifier(
+        changeNotifier: context.read<RegisterController>(),
+      );
 
-    controller.addListener(() {
-      
-      final success = controller.success;
-      final error = controller.error;
-      
-      if(success) {
-        Navigator.of(context).pop();
-      } else if(error != null && error.isNotEmpty) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(error),
-            backgroundColor: Colors.red,
-          ),
-        );
-      }
+      listenerNotifier.listener(
+        context,
+        successCallback: (notifier, listenerInstance) {
+          listenerInstance.dispose();
+          Navigator.of(context).pop();
+        }
+      );
     });
   }
 

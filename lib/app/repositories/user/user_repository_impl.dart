@@ -35,13 +35,52 @@ class UserRepositoryImpl implements UserRepository {
         case "invalid-email":
           throw AuthException(message: "Email is not valid");
         case "operation-not-allowed":
-          throw AuthException(message: "Operation is not allowed. Please, submit a ticket for support");
+          throw AuthException(message: "Operation is not allowed. Please, contact the support for more information!");
         case "weak-password":
           throw AuthException(message: "Password is too weak");
         default:
           throw AuthException(message: "Error to register user");
       }
+    } catch(e, s) {
+      log("Unknown Error: Error during register new user", stackTrace: s, error: e);
 
+      throw AuthException(message: "Error to register user");
+    }
+  }
+  
+  @override
+  Future<User?> login({
+    required String email,
+    required String password,
+  }) async {
+    
+    try {
+      
+    final userCredential = await _firebaseAuth.signInWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
+
+    return userCredential.user;
+
+    } on FirebaseAuthException catch (e, s) {
+      log("Error to login with email and password", stackTrace: s, error: e);
+
+      switch(e.code) {
+        case "invalid-email":
+        case "wrong-password":
+          throw AuthException(message: "Email and/or password is/are invalid");
+        case "user-disabled":
+          throw AuthException(message: "User are disabled. Please, contact the support for more information!");
+        case "user-not-found":
+          throw AuthException(message: "User not found");
+        default:
+          throw AuthException(message: "Error to login");
+      }
+    } catch(e, s) {
+      log("Unknown Error: Error to login with email and password", stackTrace: s, error: e);
+
+      throw AuthException(message: "Error to login");
     }
   }
 

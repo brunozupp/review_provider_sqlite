@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:review_provider_sqlite/app/core/notifier/default_listiner_notifier.dart';
 import 'package:review_provider_sqlite/app/core/ui/components/todo_list_logo.dart';
+import 'package:review_provider_sqlite/app/modules/auth/login/login_controller.dart';
 import 'package:sign_in_button/sign_in_button.dart';
+import 'package:validatorless/validatorless.dart';
 
 import '../../../core/ui/components/todo_list_field.dart';
 
@@ -16,6 +20,24 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   final _emailEC = TextEditingController();
   final _passwordEC = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final listenerNotifier = DefaultListinerNotifier(
+        changeNotifier: context.read<LoginController>(),
+      );
+
+      listenerNotifier.listener(
+        context, 
+        successCallback: (notifier, listenerInstance) {
+          listenerInstance.dispose();
+        },
+      );
+    });
+  }
 
   @override
   void dispose() {
@@ -55,6 +77,10 @@ class _LoginPageState extends State<LoginPage> {
                             TodoListField(
                               controller: _emailEC,
                               label: "Email",
+                              validator: Validatorless.multiple([
+                                Validatorless.required("Email is required"),
+                                Validatorless.email("Email is invalid"),
+                              ]),
                             ),
                             const SizedBox(
                               height: 20,
@@ -63,6 +89,10 @@ class _LoginPageState extends State<LoginPage> {
                               controller: _passwordEC,
                               label: "Password",
                               obscureText: true,
+                              validator: Validatorless.multiple([
+                                Validatorless.required("Password is required"),
+                                Validatorless.min(6, "Password must have at least 6 characters")
+                              ]),
                             ),
                             const SizedBox(
                               height: 10,
@@ -75,7 +105,17 @@ class _LoginPageState extends State<LoginPage> {
                                   child: const Text("Forgot your password?"),
                                 ),
                                 ElevatedButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+
+                                    final isFormValid = _formKey.currentState?.validate() ?? false;
+
+                                    if(isFormValid) {
+                                      context.read<LoginController>().login(
+                                        email: _emailEC.text, 
+                                        password: _passwordEC.text,
+                                      );
+                                    }
+                                  },
                                   style: ElevatedButton.styleFrom(
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(20),

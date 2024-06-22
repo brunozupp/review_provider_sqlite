@@ -22,4 +22,15 @@ class UserServiceImpl implements UserService {
     );
   }
 
+  @override
+  Future<User?> login({
+    required String email,
+    required String password,
+  }) async {
+    return await _userRepository.login(
+      email: email,
+      password: password,
+    );
+  }
+
 }

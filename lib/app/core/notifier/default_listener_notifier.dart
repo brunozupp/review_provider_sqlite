@@ -5,27 +5,37 @@ import 'package:review_provider_sqlite/app/core/ui/messages.dart';
 
 typedef SuccessVoidCallback = void Function(
   DefaultChangeNotifier notifier,
-  DefaultListinerNotifier listenerInstance,
+  DefaultListenerNotifier listenerInstance,
 );
 
 typedef ErrorVoidCallback = void Function(
   DefaultChangeNotifier notifier,
-  DefaultListinerNotifier listenerInstance,
+  DefaultListenerNotifier listenerInstance,
 );
 
-class DefaultListinerNotifier {
+typedef EverVoidCallback = void Function(
+  DefaultChangeNotifier notifier,
+  DefaultListenerNotifier listenerInstance,
+);
+
+class DefaultListenerNotifier {
   
   final DefaultChangeNotifier changeNotifier;
 
-  DefaultListinerNotifier({
+  DefaultListenerNotifier({
     required this.changeNotifier,
   });
 
   void listener(BuildContext context, {
     required SuccessVoidCallback successCallback,
     ErrorVoidCallback? errorCallback,
+    EverVoidCallback? everCallback,
   }) {
     changeNotifier.addListener(() {
+
+      if(everCallback != null) {
+        everCallback(changeNotifier, this);
+      }
 
       if(changeNotifier.loading) {
         Loader.show(context);

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:review_provider_sqlite/app/core/extensions/theme_extension.dart';
-import 'package:review_provider_sqlite/app/core/notifier/default_listiner_notifier.dart';
+import 'package:review_provider_sqlite/app/core/notifier/default_listener_notifier.dart';
 import 'package:review_provider_sqlite/app/core/ui/components/todo_list_field.dart';
 import 'package:review_provider_sqlite/app/core/ui/components/todo_list_logo.dart';
 import 'package:review_provider_sqlite/app/modules/auth/register/register_controller.dart';
@@ -35,7 +35,7 @@ class _RegisterPageState extends State<RegisterPage> {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final listenerNotifier = DefaultListinerNotifier(
+      final listenerNotifier = DefaultListenerNotifier(
         changeNotifier: context.read<RegisterController>(),
       );
 

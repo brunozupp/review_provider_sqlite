@@ -10,6 +10,9 @@ class LoginController extends DefaultChangeNotifier {
     required UserService userService,
   }) : _userService = userService;
 
+  String? infoMessage;
+  bool get hasInfo => infoMessage != null;
+
   Future<void> login({
     required String email,
     required String password,
@@ -18,6 +21,7 @@ class LoginController extends DefaultChangeNotifier {
     try {
 
       resetStateAndShowLoading();
+      infoMessage = null;
       notifyListeners();
 
       final user = await _userService.login(
@@ -30,6 +34,29 @@ class LoginController extends DefaultChangeNotifier {
       } else {
         setError("User couldn't be found. Please, check the email and password");
       }
+
+    } on AuthException catch(e) {
+
+      setError(e.message);
+
+    } finally {
+      hideLoading();
+      notifyListeners();
+    }
+  }
+
+  Future<void> forgotPassword({
+    required String email,
+  }) async {
+
+    try {
+      resetStateAndShowLoading();
+      infoMessage = null;
+      notifyListeners();
+
+      await _userService.forgotPassword(email: email);
+
+      infoMessage = "Recovery email was sent. Please, check your email.";
 
     } on AuthException catch(e) {
 

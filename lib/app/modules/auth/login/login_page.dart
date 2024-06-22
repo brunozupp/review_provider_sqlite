@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:review_provider_sqlite/app/core/notifier/default_listiner_notifier.dart';
+import 'package:review_provider_sqlite/app/core/notifier/default_listener_notifier.dart';
 import 'package:review_provider_sqlite/app/core/ui/components/todo_list_logo.dart';
+import 'package:review_provider_sqlite/app/core/ui/messages.dart';
 import 'package:review_provider_sqlite/app/modules/auth/login/login_controller.dart';
 import 'package:sign_in_button/sign_in_button.dart';
 import 'package:validatorless/validatorless.dart';
@@ -20,20 +21,28 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   final _emailEC = TextEditingController();
   final _passwordEC = TextEditingController();
+  final _emailFocusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
 
+    final controller = context.read<LoginController>();
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final listenerNotifier = DefaultListinerNotifier(
-        changeNotifier: context.read<LoginController>(),
+      final listenerNotifier = DefaultListenerNotifier(
+        changeNotifier: controller,
       );
 
       listenerNotifier.listener(
         context, 
         successCallback: (notifier, listenerInstance) {
           listenerInstance.dispose();
+        },
+        everCallback: (notifier, listenerInstance) {
+          if(controller.hasInfo) {
+            Messages.of(context).showInfo(controller.infoMessage!);
+          }
         },
       );
     });
@@ -81,6 +90,7 @@ class _LoginPageState extends State<LoginPage> {
                                 Validatorless.required("Email is required"),
                                 Validatorless.email("Email is invalid"),
                               ]),
+                              focusNode: _emailFocusNode,
                             ),
                             const SizedBox(
                               height: 20,
@@ -101,7 +111,18 @@ class _LoginPageState extends State<LoginPage> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 TextButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    if(_emailEC.text.isNotEmpty) {
+                                      
+                                      context.read<LoginController>().forgotPassword(
+                                        email: _emailEC.text,
+                                      );
+
+                                    } else {
+                                      _emailFocusNode.requestFocus();
+                                      Messages.of(context).showError("Type the email you used to enter this app to be sent a recovery email to you");
+                                    }
+                                  },
                                   child: const Text("Forgot your password?"),
                                 ),
                                 ElevatedButton(

@@ -83,5 +83,32 @@ class UserRepositoryImpl implements UserRepository {
       throw AuthException(message: "Error to login");
     }
   }
+  
+  @override
+  Future<void> forgotPassword({
+    required String email,
+  }) async {
+    
+    try {
+      
+      await _firebaseAuth.sendPasswordResetEmail(email: email);
+
+    } on FirebaseAuthException catch (e, s) {
+      log("Error to send recovery email", stackTrace: s, error: e);
+
+      switch(e.code) {
+        case "auth/invalid-email":
+          throw AuthException(message: "Email is invalid");
+        case "auth/user-not-found":
+          throw AuthException(message: "User not found");
+        default:
+          throw AuthException(message: "Error to send recovery email");
+      }
+    } catch(e, s) {
+      log("Unknown Error: Error to send recovery email", stackTrace: s, error: e);
+
+      throw AuthException(message: "Error to send recovery email");
+    }
+  }
 
 }

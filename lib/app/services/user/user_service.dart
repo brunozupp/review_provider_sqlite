@@ -19,5 +19,5 @@ abstract interface class UserService {
 
   Future<User?> googleLogin();
 
-  Future<void> googleLogout();
+  Future<void> logout();
 }

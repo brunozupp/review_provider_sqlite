@@ -4,9 +4,9 @@ import 'package:review_provider_sqlite/app/modules/home/home_page.dart';
 final class HomeModule extends TodoListModule {
   
   HomeModule() : super(
-    bindings: [
+    // bindings: [
 
-    ],
+    // ],
     routers: {
       "/home": (context) => const HomePage(),
     },

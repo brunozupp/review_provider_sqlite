@@ -5,6 +5,7 @@ import 'package:review_provider_sqlite/app/modules/home/home_module.dart';
 import 'package:review_provider_sqlite/app/modules/splash/splash_page.dart';
 
 import 'core/database/sqlite_adm_connection.dart';
+import 'core/navigator/todo_list_navigator.dart';
 
 class AppWidget extends StatefulWidget {
   const AppWidget({super.key});
@@ -35,6 +36,7 @@ class _AppWidgetState extends State<AppWidget> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      navigatorKey: TodoListNavigator.navigatorKey,
       theme: TodoListUiConfig.theme,
       title: "Todo List",
       routes: {

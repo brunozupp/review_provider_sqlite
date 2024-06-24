@@ -51,5 +51,14 @@ class UserServiceImpl implements UserService {
   Future<void> logout() async {
     return await _userRepository.logout();
   }
+  
+  @override
+  Future<void> updateDisplayName({
+    required String name,
+  }) async {
+    return await _userRepository.updateDisplayName(
+      name: name,
+    );
+  }
 
 }

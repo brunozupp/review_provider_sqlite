@@ -19,4 +19,8 @@ abstract interface class UserRepository {
   Future<User?> googleLogin();
 
   Future<void> logout();
+
+  Future<void> updateDisplayName({
+    required String name,
+  });
 }

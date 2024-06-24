@@ -15,4 +15,8 @@ abstract interface class UserRepository {
   Future<void> forgotPassword({
     required String email,
   });
+
+  Future<User?> googleLogin();
+
+  Future<void> googleLogout();
 }

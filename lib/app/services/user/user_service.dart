@@ -16,4 +16,8 @@ abstract interface class UserService {
   Future<void> forgotPassword({
     required String email,
   });
+
+  Future<User?> googleLogin();
+
+  Future<void> googleLogout();
 }

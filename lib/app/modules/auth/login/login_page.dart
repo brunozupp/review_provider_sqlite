@@ -175,7 +175,9 @@ class _LoginPageState extends State<LoginPage> {
                             SignInButton(
                               Buttons.google,
                               text: "Continue with Google",
-                              onPressed: () {},
+                              onPressed: () {
+                                context.read<LoginController>().googleLogin();
+                              },
                               padding: const EdgeInsets.all(5),
                               shape: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(30),

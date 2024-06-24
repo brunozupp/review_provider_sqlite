@@ -41,5 +41,15 @@ class UserServiceImpl implements UserService {
       email: email,
     );
   }
+  
+  @override
+  Future<User?> googleLogin() async {
+    return await _userRepository.googleLogin();
+  }
+  
+  @override
+  Future<void> googleLogout() async {
+    return await _userRepository.googleLogout();
+  }
 
 }

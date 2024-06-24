@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:review_provider_sqlite/app/core/exceptions/auth_exception.dart';
 
 import './user_repository.dart';
@@ -109,6 +110,67 @@ class UserRepositoryImpl implements UserRepository {
 
       throw AuthException(message: "Error to send recovery email");
     }
+  }
+  
+  @override
+  Future<User?> googleLogin() async {
+    
+    try {
+      
+      final googleSignIn = GoogleSignIn();
+
+      // To guarantee that the window to choose the account will always open
+      // If I do not validate this part, the app will always get the last account
+      // chosed because of cache.
+      if(await googleSignIn.isSignedIn()) {
+        await googleSignIn.disconnect();
+      }
+
+      // It will open that window to the user chooses the google account
+      final googleUser = await googleSignIn.signIn();
+
+      if(googleUser != null) {
+
+        final googleAuth = await googleUser.authentication;
+
+        final firebaseCredential = GoogleAuthProvider.credential(
+          accessToken: googleAuth.accessToken,
+          idToken: googleAuth.idToken,
+        );
+
+        final userCredential = await _firebaseAuth.signInWithCredential(firebaseCredential);
+
+        return userCredential.user;
+      } else {
+        throw AuthException(message: "Error to login with google");
+      }
+
+    } on FirebaseAuthException catch (e, s) {
+      log("Error to login with google", stackTrace: s, error: e);
+
+      switch(e.code) {
+        case "account-exists-with-different-credential":
+          throw AuthException(message: "There already exists an account with the email address");
+        case "user-disabled":
+          throw AuthException(message: "User has been disabled");
+        case "wrong-password":
+          throw AuthException(message: "The password provided is not correct");
+        case "user-not-found":
+          throw AuthException(message: "User not found");
+        default:
+          throw AuthException(message: "Error to login with google");
+      }
+    } catch(e, s) {
+      log("Unknown Error: Error to login with google", stackTrace: s, error: e);
+
+      throw AuthException(message: "Error to login with google");
+    }
+  }
+  
+  @override
+  Future<void> googleLogout() async {
+    await GoogleSignIn().signOut();
+    _firebaseAuth.signOut();
   }
 
 }

@@ -3,6 +3,7 @@ import 'package:review_provider_sqlite/app/core/extensions/theme_extension.dart'
 import 'package:review_provider_sqlite/app/core/ui/todo_list_icons.dart';
 
 import 'widgets/home_drawer.dart';
+import 'widgets/home_filters.dart';
 import 'widgets/home_header.dart';
 
 class HomePage extends StatelessWidget {
@@ -49,6 +50,7 @@ class HomePage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       HomeHeader(),
+                      HomeFilters(),
                     ],
                   ),
                 ),

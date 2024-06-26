@@ -5,6 +5,7 @@ import 'package:review_provider_sqlite/app/core/ui/todo_list_icons.dart';
 import 'widgets/home_drawer.dart';
 import 'widgets/home_filters.dart';
 import 'widgets/home_header.dart';
+import 'widgets/home_tasks.dart';
 import 'widgets/home_week_filer.dart';
 
 class HomePage extends StatelessWidget {
@@ -17,7 +18,7 @@ class HomePage extends StatelessWidget {
         iconTheme: IconThemeData(
           color: context.primaryColor,
         ),
-        backgroundColor: Colors.transparent,
+        backgroundColor: const Color(0xFFFAFBFE),
         elevation: 0,
         actions: [
           PopupMenuButton(
@@ -46,13 +47,14 @@ class HomePage extends StatelessWidget {
                 margin: const EdgeInsets.symmetric(
                   horizontal: 30,
                 ),
-                child: IntrinsicHeight(
+                child: const IntrinsicHeight(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       HomeHeader(),
                       HomeFilters(),
                       HomeWeekFiler(),
+                      HomeTasks(),
                     ],
                   ),
                 ),

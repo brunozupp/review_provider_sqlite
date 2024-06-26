@@ -14,7 +14,7 @@ class HomeWeekFiler extends StatelessWidget {
           height: 20,
         ),
         Text(
-          "DIA DA SEMANA",
+          "WEEKDAY",
           style: context.titleStyle,
         ),
         const SizedBox(
@@ -24,7 +24,7 @@ class HomeWeekFiler extends StatelessWidget {
           height: 95,
           child: DatePicker(
             DateTime.now(),
-            locale: "pt_BR",
+            locale: "en_US",
             initialSelectedDate: DateTime.now(),
             selectionColor: context.primaryColor,
             selectedTextColor: Colors.white,

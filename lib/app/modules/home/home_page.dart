@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:review_provider_sqlite/app/core/extensions/theme_extension.dart';
 import 'package:review_provider_sqlite/app/core/ui/todo_list_icons.dart';
+import 'package:review_provider_sqlite/app/modules/tasks/tasks_module.dart';
 
 import 'widgets/home_drawer.dart';
 import 'widgets/home_filters.dart';
@@ -34,7 +35,7 @@ class HomePage extends StatelessWidget {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () => _goToCreateTask(context),
         backgroundColor: context.primaryColor,
         child: const Icon(Icons.add),
       ),
@@ -66,6 +67,26 @@ class HomePage extends StatelessWidget {
               ),
             ),
           );
+        },
+      ),
+    );
+  }
+
+  void _goToCreateTask(BuildContext context) {
+    Navigator.of(context).push(
+      PageRouteBuilder(
+        transitionDuration: const Duration(milliseconds: 400),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          animation = CurvedAnimation(parent: animation, curve: Curves.easeInQuad);
+
+          return ScaleTransition(
+            scale: animation,
+            alignment: Alignment.bottomRight,
+            child: child,
+          );
+        },
+        pageBuilder: (context, animation, secondaryAnimation) {
+          return TasksModule().getPage(path: "/tasks/create", context: context);
         },
       ),
     );

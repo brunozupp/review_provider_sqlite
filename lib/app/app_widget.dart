@@ -6,6 +6,7 @@ import 'package:review_provider_sqlite/app/modules/splash/splash_page.dart';
 
 import 'core/database/sqlite_adm_connection.dart';
 import 'core/navigator/todo_list_navigator.dart';
+import 'modules/tasks/tasks_module.dart';
 
 class AppWidget extends StatefulWidget {
   const AppWidget({super.key});
@@ -43,6 +44,7 @@ class _AppWidgetState extends State<AppWidget> {
         "/": (_) => const SplashPage(),
         ...AuthModule().routers,
         ...HomeModule().routers,
+        ...TasksModule().routers,
       },
     );
   }

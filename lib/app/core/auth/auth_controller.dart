@@ -25,7 +25,9 @@ class AuthController extends ChangeNotifier {
     _firebaseAuth.userChanges().listen((_) => notifyListeners());
 
     // It listens the changes in login and logout
-    _firebaseAuth.idTokenChanges().listen((user) {
+    // So, because I am using authStateChanges, when I register/create a new
+    // user and succeed, it will fire the listening and go to the home.
+    _firebaseAuth.authStateChanges().listen((user) {
 
       if(user != null) { // Login
         TodoListNavigator.to.pushNamedAndRemoveUntil("/home", (route) => false);

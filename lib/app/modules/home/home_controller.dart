@@ -1,3 +1,4 @@
+import 'package:review_provider_sqlite/app/core/extensions/date_time_extension.dart';
 import 'package:review_provider_sqlite/app/core/notifier/default_change_notifier.dart';
 import 'package:review_provider_sqlite/app/models/task_filter_enum.dart';
 import 'package:review_provider_sqlite/app/models/total_tasks_model.dart';
@@ -22,6 +23,9 @@ class HomeController extends DefaultChangeNotifier {
 
   List<TaskModel> allTasks = [];
   List<TaskModel> filteredTasks = [];
+
+  DateTime? initialDateOfWeek;
+  DateTime? selectedDate;
 
   Future<void> loadTotalTasks() async {
 
@@ -70,6 +74,7 @@ class HomeController extends DefaultChangeNotifier {
         break;
       case TaskFilterEnum.week:
         final weekTasks = await _tasksService.getWeek();
+        initialDateOfWeek = weekTasks.startDate;
         tasks = weekTasks.tasks;
         break;
     }
@@ -77,7 +82,20 @@ class HomeController extends DefaultChangeNotifier {
     allTasks = tasks;
     filteredTasks = tasks;
 
+    if(filter == TaskFilterEnum.week && initialDateOfWeek != null) {
+      filterByDay(initialDateOfWeek!);
+    }
+
     hideLoading();
+    notifyListeners();
+  }
+
+  void filterByDay(DateTime date) {
+    selectedDate = date;
+    filteredTasks = allTasks
+      .where((task) => task.dateTime.isEqualOnlyDate(date))
+      .toList();
+
     notifyListeners();
   }
 

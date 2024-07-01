@@ -62,9 +62,17 @@ class _HomePageState extends State<HomePage> {
             icon: const Icon(
               TodoListIcons.filter,
             ),
+            onSelected: (value) {
+              widget._controller.showOrHideFinishedTasks();
+            },
             itemBuilder: (_) => [
-              const PopupMenuItem<bool>(
-                child: Text("Show completed tasks"),
+              PopupMenuItem<bool>(
+                value: true,
+                child: Text(
+                  widget._controller.showFinishedTasks
+                    ? "Hide finished tasks"
+                    : "Show finished tasks"
+                ),
               ),
             ],
           ),

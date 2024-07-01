@@ -1,3 +1,4 @@
+import 'package:review_provider_sqlite/app/core/exceptions/repository_exception.dart';
 import 'package:review_provider_sqlite/app/core/extensions/date_time_extension.dart';
 import 'package:review_provider_sqlite/app/core/notifier/default_change_notifier.dart';
 import 'package:review_provider_sqlite/app/models/task_filter_enum.dart';
@@ -26,6 +27,8 @@ class HomeController extends DefaultChangeNotifier {
 
   DateTime? initialDateOfWeek;
   DateTime? selectedDate;
+
+  bool showFinishedTasks = false;
 
   Future<void> loadTotalTasks() async {
 
@@ -93,6 +96,10 @@ class HomeController extends DefaultChangeNotifier {
       selectedDate = null;
     }
 
+    if(!showFinishedTasks) {
+      filteredTasks = filteredTasks.where((task) => !task.finished).toList();
+    }
+
     hideLoading();
     notifyListeners();
   }
@@ -114,5 +121,38 @@ class HomeController extends DefaultChangeNotifier {
     ]);
 
     notifyListeners();
+  }
+
+  Future<void> checkOrUncheckTask({
+    required TaskModel task,
+  }) async {
+
+    try {
+
+      resetStateAndShowLoading();
+      notifyListeners();
+
+      final taskUpdated = task.copyWith(
+        finished: !task.finished,
+      );
+
+      await _tasksService.checkOrUncheckTask(
+        task: taskUpdated,
+      );
+
+    } on RepositoryException catch(e) {
+
+      setError(e.message);
+    
+    } finally {
+
+      hideLoading();
+      refreshPage();
+    }
+  }
+
+  void showOrHideFinishedTasks() {
+    showFinishedTasks = !showFinishedTasks;
+    refreshPage();
   }
 }

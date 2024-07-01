@@ -65,5 +65,14 @@ class TasksServiceImpl implements TasksService {
       tasks: tasks,
     );
   }
+  
+  @override
+  Future<void> checkOrUncheckTask({
+    required TaskModel task,
+  }) async {
+    return await _tasksRepository.checkOrUncheckTask(
+      task: task,
+    );
+  }
 
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:review_provider_sqlite/app/core/extensions/theme_extension.dart';
 import 'package:review_provider_sqlite/app/core/ui/todo_list_icons.dart';
+import 'package:review_provider_sqlite/app/modules/home/home_controller.dart';
 import 'package:review_provider_sqlite/app/modules/tasks/tasks_module.dart';
 
 import 'widgets/home_drawer.dart';
@@ -9,8 +10,29 @@ import 'widgets/home_header.dart';
 import 'widgets/home_tasks.dart';
 import 'widgets/home_week_filer.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class HomePage extends StatefulWidget {
+
+  final HomeController _controller;
+
+  const HomePage({
+    super.key,
+    required HomeController controller,
+  }) : _controller = controller;
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+
+  @override
+  void initState() {
+    super.initState();
+    
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      widget._controller.loadTotalTasks();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

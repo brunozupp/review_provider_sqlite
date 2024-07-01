@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:review_provider_sqlite/app/core/extensions/theme_extension.dart';
+import 'package:review_provider_sqlite/app/core/notifier/default_listener_notifier.dart';
 import 'package:review_provider_sqlite/app/core/ui/todo_list_icons.dart';
 import 'package:review_provider_sqlite/app/modules/home/home_controller.dart';
 import 'package:review_provider_sqlite/app/modules/tasks/tasks_module.dart';
 
+import '../../models/task_filter_enum.dart';
 import 'widgets/home_drawer.dart';
 import 'widgets/home_filters.dart';
 import 'widgets/home_header.dart';
@@ -30,8 +32,20 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      widget._controller.loadTotalTasks();
+      DefaultListenerNotifier(
+        changeNotifier: widget._controller,
+      ).listener(
+        context, 
+        successCallback: (notifier, listenerInstance) {
+          listenerInstance.dispose();
+        },
+      );
     });
+
+    Future.wait([
+      widget._controller.loadTotalTasks(),
+      widget._controller.findTasks(filter: TaskFilterEnum.today),
+    ]);
   }
 
   @override
@@ -94,8 +108,8 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void _goToCreateTask(BuildContext context) {
-    Navigator.of(context).push(
+  Future<void> _goToCreateTask(BuildContext context) async {
+    await Navigator.of(context).push(
       PageRouteBuilder(
         transitionDuration: const Duration(milliseconds: 400),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
@@ -112,5 +126,7 @@ class _HomePageState extends State<HomePage> {
         },
       ),
     );
+
+    widget._controller.refreshPage();
   }
 }

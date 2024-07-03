@@ -17,7 +17,7 @@ class TaskModel {
     return TaskModel(
       id: map["id"],
       description: map["descricao"],
-      dateTime: map["data_hora"],
+      dateTime: DateTime.parse(map["data_hora"]),
       finished: map["finalizado"] == 1,
     );
   }

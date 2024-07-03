@@ -88,6 +88,7 @@ class _RegisterPageState extends State<RegisterPage> {
           ],
         ),
       ),
+      backgroundColor: Colors.white,
       body: ListView(
         children: [
           SizedBox(

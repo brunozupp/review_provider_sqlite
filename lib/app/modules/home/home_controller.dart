@@ -60,48 +60,56 @@ class HomeController extends DefaultChangeNotifier {
     required TaskFilterEnum filter,
   }) async {
 
-    filterSelected = filter;
+    try {
 
-    showLoading();
+      filterSelected = filter;
 
-    notifyListeners();
+      resetStateAndShowLoading();
 
-    List<TaskModel> tasks;
+      notifyListeners();
 
-    switch(filter) {
-      case TaskFilterEnum.today:
-        tasks = await _tasksService.getToday();
-        break;
-      case TaskFilterEnum.tomorrow:
-        tasks = await _tasksService.getTomorrow();
-        break;
-      case TaskFilterEnum.week:
-        final weekTasks = await _tasksService.getWeek();
-        initialDateOfWeek = weekTasks.startDate;
-        tasks = weekTasks.tasks;
-        break;
-    }
+      List<TaskModel> tasks;
 
-    allTasks = tasks;
-    filteredTasks = tasks;
-
-    if(filter == TaskFilterEnum.week) {
-
-      if(selectedDate != null) {
-        filterByDay(selectedDate!);
-      } else if(initialDateOfWeek != null) {
-        filterByDay(initialDateOfWeek!);
+      switch(filter) {
+        case TaskFilterEnum.today:
+          tasks = await _tasksService.getToday();
+          break;
+        case TaskFilterEnum.tomorrow:
+          tasks = await _tasksService.getTomorrow();
+          break;
+        case TaskFilterEnum.week:
+          final weekTasks = await _tasksService.getWeek();
+          initialDateOfWeek = weekTasks.startDate;
+          tasks = weekTasks.tasks;
+          break;
       }
-    } else {
-      selectedDate = null;
-    }
 
-    if(!showFinishedTasks) {
-      filteredTasks = filteredTasks.where((task) => !task.finished).toList();
-    }
+      allTasks = tasks;
+      filteredTasks = tasks;
 
-    hideLoading();
-    notifyListeners();
+      if(filter == TaskFilterEnum.week) {
+
+        if(selectedDate != null) {
+          filterByDay(selectedDate!);
+        } else if(initialDateOfWeek != null) {
+          filterByDay(initialDateOfWeek!);
+        }
+      } else {
+        selectedDate = null;
+      }
+
+      if(!showFinishedTasks) {
+        filteredTasks = filteredTasks.where((task) => !task.finished).toList();
+      }
+
+    } on RepositoryException catch(e) {
+
+      setError(e.message);
+
+    } finally {
+      hideLoading();
+      notifyListeners();
+    }
   }
 
   void filterByDay(DateTime date) {

@@ -31,7 +31,8 @@ class TodoCardFilter extends StatelessWidget {
       child: Container(
         constraints: const BoxConstraints(
           minHeight: 120,
-          maxWidth: 150,
+          maxHeight: 120,
+          maxWidth: 180,
         ),
         decoration: BoxDecoration(
           color: selected ? context.primaryColor : Colors.white,
@@ -55,6 +56,7 @@ class TodoCardFilter extends StatelessWidget {
                 color: selected ? Colors.white : Colors.grey,
               ),
             ),
+            const Spacer(),
             Text(
               label,
               style: context.titleStyle.copyWith(
@@ -79,6 +81,7 @@ class TodoCardFilter extends StatelessWidget {
                 );
               },
             ),
+            const Spacer()
           ],
         ),
       ),

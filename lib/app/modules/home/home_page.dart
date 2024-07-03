@@ -40,12 +40,12 @@ class _HomePageState extends State<HomePage> {
           listenerInstance.dispose();
         },
       );
-    });
 
-    Future.wait([
-      widget._controller.loadTotalTasks(),
-      widget._controller.findTasks(filter: TaskFilterEnum.today),
-    ]);
+      Future.wait([
+        widget._controller.loadTotalTasks(),
+        widget._controller.findTasks(filter: TaskFilterEnum.today),
+      ]);
+    });
   }
 
   @override

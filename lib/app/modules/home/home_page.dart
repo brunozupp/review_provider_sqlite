@@ -63,6 +63,7 @@ class _HomePageState extends State<HomePage> {
               TodoListIcons.filter,
             ),
             onSelected: (value) {
+              // throw Exception("Error to show on Crashlytics");
               widget._controller.showOrHideFinishedTasks();
             },
             itemBuilder: (_) => [

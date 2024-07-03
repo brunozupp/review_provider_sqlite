@@ -57,7 +57,7 @@ class _TaskCreatePageState extends State<TaskCreatePage> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.white,
         elevation: 0,
         actions: [
           IconButton(
@@ -69,6 +69,7 @@ class _TaskCreatePageState extends State<TaskCreatePage> {
           )
         ]
       ),
+      backgroundColor: Colors.white,
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
 

@@ -29,7 +29,7 @@ final class TasksModule extends TodoListModule {
       ),
     ],
     routers: {
-      "/task/create": (context) => TaskCreatePage(
+      "/tasks/create": (context) => TaskCreatePage(
         controller: context.read(),
       ),
     },

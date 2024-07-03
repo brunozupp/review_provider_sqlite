@@ -41,7 +41,7 @@ class CalendarButton extends StatelessWidget {
               color: Colors.grey,
             ),
             const SizedBox(
-              height: 10,
+              width: 4,
             ),
             
             Selector<TaskCreateController, String>(

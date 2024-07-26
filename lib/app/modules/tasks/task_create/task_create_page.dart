@@ -54,73 +54,77 @@ class _TaskCreatePageState extends State<TaskCreatePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: Colors.white,
-        elevation: 0,
-        actions: [
-          IconButton(
-            onPressed: () => Navigator.of(context).pop(),
-            icon: const Icon(
-              Icons.close,
-              color: Colors.black,
-            ),
-          )
-        ]
-      ),
-      backgroundColor: Colors.white,
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-
-          final isFormValid = _formKey.currentState?.validate() ?? false;
-
-          if(isFormValid) {
-            widget._controller.save(
-              description: _descriptionEC.text,
-            );
-          }
-        }, 
-        label: const Text(
-          "Save Task",
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-          ),
+    return GestureDetector(
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      behavior: HitTestBehavior.translucent,
+      child: Scaffold(
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          backgroundColor: Colors.white,
+          elevation: 0,
+          actions: [
+            IconButton(
+              onPressed: () => Navigator.of(context).pop(),
+              icon: const Icon(
+                Icons.close,
+                color: Colors.black,
+              ),
+            )
+          ]
         ),
-        backgroundColor: context.primaryColor,
-      ),
-      body: Form(
-        key: _formKey,
-        child: Container(
-          margin: const EdgeInsets.symmetric(
-            horizontal: 30,
+        backgroundColor: Colors.white,
+        floatingActionButton: FloatingActionButton.extended(
+          onPressed: () {
+      
+            final isFormValid = _formKey.currentState?.validate() ?? false;
+      
+            if(isFormValid) {
+              widget._controller.save(
+                description: _descriptionEC.text,
+              );
+            }
+          }, 
+          label: const Text(
+            "Save Task",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
           ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Align(
-                alignment: Alignment.center,
-                child: Text(
-                  "Create Task",
-                  style: context.titleStyle.copyWith(
-                    fontSize: 20,
+          backgroundColor: context.primaryColor,
+        ),
+        body: Form(
+          key: _formKey,
+          child: Container(
+            margin: const EdgeInsets.symmetric(
+              horizontal: 30,
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    "Create Task",
+                    style: context.titleStyle.copyWith(
+                      fontSize: 20,
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              TodoListField(
-                controller: _descriptionEC,
-                label: "",
-                validator: Validatorless.required("Description is required"),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              CalendarButton(),
-            ],
+                const SizedBox(
+                  height: 30,
+                ),
+                TodoListField(
+                  controller: _descriptionEC,
+                  label: "",
+                  validator: Validatorless.required("Description is required"),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                CalendarButton(),
+              ],
+            ),
           ),
         ),
       ),

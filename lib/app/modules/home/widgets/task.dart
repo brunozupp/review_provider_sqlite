@@ -57,6 +57,53 @@ class Task extends StatelessWidget {
               width: 1,
             ),
           ),
+          trailing: Padding(
+            padding: const EdgeInsets.only(
+              right: 8,
+            ),
+            child: InkWell(
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (_) {
+                    return AlertDialog(
+                      title: const Text(
+                        "Delete Task",
+                      ),
+                      content: const Text(
+                        "Are you sure you want the delete this task? It can not be undone!",
+                      ),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.of(context).pop(),
+                          child: const Text(
+                            "Cancel",
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: () async {
+                            await context.read<HomeController>().deleteTaskById(
+                              taskId: taskModel.id,
+                            );
+                            Navigator.of(context).pop();
+                          },
+                          child: const Text(
+                            "Delete",
+                            style: TextStyle(
+                              color: Colors.red,
+                            ),
+                          ),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              },
+              child: const Icon(
+                Icons.delete,
+              ),
+            ),
+          ),
         ),
       ),
     );

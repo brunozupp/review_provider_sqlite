@@ -17,4 +17,8 @@ abstract interface class TasksRepository {
   });
 
   Future<void> deleteAll();
+
+  Future<void> deleteById({
+    required int taskId,
+  });
 }

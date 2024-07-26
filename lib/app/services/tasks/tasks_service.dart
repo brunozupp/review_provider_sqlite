@@ -18,4 +18,8 @@ abstract interface class TasksService {
   Future<void> checkOrUncheckTask({
     required TaskModel task,
   });
+
+  Future<void> deleteById({
+    required int taskId,
+  });
 }

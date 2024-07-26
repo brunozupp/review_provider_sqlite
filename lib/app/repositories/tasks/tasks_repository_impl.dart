@@ -108,7 +108,7 @@ class TasksRepositoryImpl implements TasksRepository {
 
       final conn = await _sqliteConnectionFactory.openConnection();
 
-      await conn.rawUpdate(
+      await conn.rawDelete(
         "DELETE FROM todo",
       );
 
@@ -118,6 +118,30 @@ class TasksRepositoryImpl implements TasksRepository {
 
       throw RepositoryException(
         message: "Error to delete all the tasks",
+      );
+    }
+  }
+  
+  @override
+  Future<void> deleteById({
+    required int taskId,
+  }) async {
+    
+    try {
+
+      final conn = await _sqliteConnectionFactory.openConnection();
+
+      await conn.rawDelete(
+        "DELETE FROM todo WHERE id = ?",
+        [taskId],
+      );
+
+    } catch(e, s) {
+
+      log("Error to delete the task", error: e, stackTrace: s);
+
+      throw RepositoryException(
+        message: "Error to delete the task",
       );
     }
   }

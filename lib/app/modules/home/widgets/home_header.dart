@@ -16,7 +16,7 @@ class HomeHeader extends StatelessWidget {
         selector: (_, controller) => controller.user?.displayName ?? "No name provided",
         builder: (_, value, __) {
           return Text(
-            "E ai, $value!",
+            "Hi, $value!",
             style: context.textTheme.headlineMedium?.copyWith(
               fontWeight: FontWeight.bold,
             ),

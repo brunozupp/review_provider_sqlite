@@ -74,5 +74,14 @@ class TasksServiceImpl implements TasksService {
       task: task,
     );
   }
+  
+  @override
+  Future<void> deleteById({
+    required int taskId,
+  }) async {
+    return await _tasksRepository.deleteById(
+      taskId: taskId,
+    );
+  }
 
 }

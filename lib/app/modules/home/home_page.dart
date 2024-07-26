@@ -10,7 +10,7 @@ import 'widgets/home_drawer.dart';
 import 'widgets/home_filters.dart';
 import 'widgets/home_header.dart';
 import 'widgets/home_tasks.dart';
-import 'widgets/home_week_filer.dart';
+import 'widgets/home_week_filter.dart';
 
 class HomePage extends StatefulWidget {
 
@@ -104,7 +104,7 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       HomeHeader(),
                       HomeFilters(),
-                      HomeWeekFiler(),
+                      HomeWeekFilter(),
                       HomeTasks(),
                     ],
                   ),

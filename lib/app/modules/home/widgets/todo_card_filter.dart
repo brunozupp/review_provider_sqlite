@@ -50,7 +50,7 @@ class TodoCardFilter extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "${totalTasksModel?.totalTasks ?? 0} TASKS",
+              _getTotalTasksLabel(),
               style: context.titleStyle.copyWith(
                 fontSize: 10,
                 color: selected ? Colors.white : Colors.grey,
@@ -86,6 +86,26 @@ class TodoCardFilter extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String _getTotalTasksLabel() {
+
+    var totalOfTasks = 0;
+
+    if(totalTasksModel != null) {
+      totalOfTasks = totalTasksModel!.totalTasks;
+    }
+    
+    var label = "$totalOfTasks TASKS";
+
+    if(totalOfTasks > 0) {
+
+      final finishedTasks = totalTasksModel!.totalTasksFinished;
+
+      label += " ($totalOfTasks/$finishedTasks)";
+    }
+
+    return label;
   }
 
   double _getPercentageFinishedTasks() {

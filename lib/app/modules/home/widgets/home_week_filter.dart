@@ -6,8 +6,8 @@ import 'package:review_provider_sqlite/app/modules/home/home_controller.dart';
 
 import '../../../models/task_filter_enum.dart';
 
-class HomeWeekFiler extends StatelessWidget {
-  const HomeWeekFiler({super.key});
+class HomeWeekFilter extends StatelessWidget {
+  const HomeWeekFilter({super.key});
 
   @override
   Widget build(BuildContext context) {

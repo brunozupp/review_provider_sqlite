@@ -1,5 +1,5 @@
 1 - When the user logout from the app, it must clean up the database (V);
 2 - Feature to delete a task (ask for sure about this action) (V);
-3 - Show the numbers of tasks according to the filter of show/hide finished tasks inside each card (today, tomorrow, week). It
-means to show only the number of the tasks that are visible in the list;
+3 - Added the total tasks / finished tasks right next to the label of quantity from each card (V)
 4 - Crashlytics. (V)
+5 - Create a class to concentrate ALL the code related to configure the APP that is inside MAIN ()

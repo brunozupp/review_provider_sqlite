@@ -38,6 +38,4 @@ Future<void> main() async {
     log("Block error occuried!", error: error, stackTrace: stackTrace);
     FirebaseCrashlytics.instance.recordError(error, stackTrace, fatal: true);
   });
-
-  
 }

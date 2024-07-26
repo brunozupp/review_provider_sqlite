@@ -100,4 +100,25 @@ class TasksRepositoryImpl implements TasksRepository {
       );
     }
   }
+  
+  @override
+  Future<void> deleteAll() async {
+    
+    try {
+
+      final conn = await _sqliteConnectionFactory.openConnection();
+
+      await conn.rawUpdate(
+        "DELETE FROM todo",
+      );
+
+    } catch(e, s) {
+
+      log("Error to delete all the tasks", error: e, stackTrace: s);
+
+      throw RepositoryException(
+        message: "Error to delete all the tasks",
+      );
+    }
+  }
 }

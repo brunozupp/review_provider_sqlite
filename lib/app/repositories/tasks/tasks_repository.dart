@@ -15,4 +15,6 @@ abstract interface class TasksRepository {
   Future<void> checkOrUncheckTask({
     required TaskModel task,
   });
+
+  Future<void> deleteAll();
 }

@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:review_provider_sqlite/app/repositories/tasks/tasks_repository.dart';
 import 'package:review_provider_sqlite/app/repositories/user/user_repository.dart';
 
 import './user_service.dart';
@@ -6,10 +7,13 @@ import './user_service.dart';
 class UserServiceImpl implements UserService {
   
   final UserRepository _userRepository;
+  final TasksRepository _tasksRepository;
 
   UserServiceImpl({
     required UserRepository userRepository,
-  }) : _userRepository = userRepository;
+    required TasksRepository tasksRepository,
+  })  : _userRepository = userRepository,
+        _tasksRepository = tasksRepository;
 
   @override
   Future<User?> register({
@@ -49,7 +53,8 @@ class UserServiceImpl implements UserService {
   
   @override
   Future<void> logout() async {
-    return await _userRepository.logout();
+    await _userRepository.logout();
+    await _tasksRepository.deleteAll();
   }
   
   @override

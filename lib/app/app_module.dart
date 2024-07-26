@@ -9,6 +9,9 @@ import 'package:review_provider_sqlite/app/repositories/user/user_repository_imp
 import 'package:review_provider_sqlite/app/services/user/user_service.dart';
 import 'package:review_provider_sqlite/app/services/user/user_service_impl.dart';
 
+import 'repositories/tasks/tasks_repository.dart';
+import 'repositories/tasks/tasks_repository_impl.dart';
+
 class AppModule extends StatelessWidget {
   const AppModule({super.key});
 
@@ -24,8 +27,16 @@ class AppModule extends StatelessWidget {
         Provider<UserRepository>(
           create: (context) => UserRepositoryImpl(firebaseAuth: context.read()),
         ),
+        Provider<TasksRepository>(
+          create: (context) => TasksRepositoryImpl(
+            sqliteConnectionFactory: context.read(),
+          ),
+        ),
         Provider<UserService>(
-          create: (context) => UserServiceImpl(userRepository: context.read()),
+          create: (context) => UserServiceImpl(
+            userRepository: context.read(),
+            tasksRepository: context.read(),
+          ),
         ),
         ChangeNotifierProvider(
           lazy: false, // To be able to call the loadListener when the app runs, I need to

@@ -2,4 +2,6 @@
 2 - Feature to delete a task (ask for sure about this action) (V);
 3 - Added the total tasks / finished tasks right next to the label of quantity from each card (V)
 4 - Crashlytics. (V)
-5 - Create a class to concentrate ALL the code related to configure the APP that is inside MAIN ()
+5 - Create a class to concentrate ALL the code related to configure the APP that is inside MAIN (V)
+6 - Create Unit Test to repositories ()
+7 - Create Unit Test to services ()

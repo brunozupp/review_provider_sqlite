@@ -34,4 +34,9 @@ class TaskModel {
       finished: finished ?? this.finished
     );
   }
+
+  @override
+  String toString() {
+    return 'TaskModel(id: $id, description: $description, dateTime: $dateTime, finished: $finished)';
+  }
 }

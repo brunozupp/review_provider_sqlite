@@ -2,7 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:review_provider_sqlite/app/core/database/sqlite_connection_factory.dart';
 import 'package:sqflite/sqflite.dart';
 
-import 'sqlite_connection_factory_mock.dart';
+import 'sqlite_connection_factory_simulator.dart';
 
 /// Testing a class that is a factory to open a connection with database
 /// can be about testing its structure to see if ALL the changes in the
@@ -10,17 +10,17 @@ import 'sqlite_connection_factory_mock.dart';
 /// So, testing the inserting and fetching can be sufficient to this case.
 void main() {
   
-  late final SqliteConnectionFactory connection;
+  late final SqliteConnectionFactory sqliteConnectionFactory;
   late Database db;
 
   setUpAll(() async {
-    connection = SqliteConnectionFactoryMock();
+    sqliteConnectionFactory = SqliteConnectionFactorySimulator();
 
-    db = await connection.openConnection();
+    db = await sqliteConnectionFactory.openConnection();
   });
 
   tearDownAll(() {
-    connection.closeConnection();
+    sqliteConnectionFactory.closeConnection();
   });
 
   final currentDate = DateTime.now();

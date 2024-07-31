@@ -1,17 +1,17 @@
 import 'package:review_provider_sqlite/app/core/database/sqlite_connection_factory.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
-class SqliteConnectionFactoryMock extends SqliteConnectionFactory {
+class SqliteConnectionFactorySimulator extends SqliteConnectionFactory {
 
-  static SqliteConnectionFactoryMock? _instance;
+  static SqliteConnectionFactorySimulator? _instance;
 
   Database? _db;
 
-  SqliteConnectionFactoryMock._();
+  SqliteConnectionFactorySimulator._();
 
-  factory SqliteConnectionFactoryMock() {
+  factory SqliteConnectionFactorySimulator() {
 
-    _instance ??= SqliteConnectionFactoryMock._();
+    _instance ??= SqliteConnectionFactorySimulator._();
 
     return _instance!;
   }

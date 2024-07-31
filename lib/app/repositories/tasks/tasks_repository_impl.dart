@@ -1,9 +1,9 @@
 import 'dart:developer';
 
-import 'package:review_provider_sqlite/app/core/database/sqlite_connection_factory.dart';
 import 'package:review_provider_sqlite/app/core/exceptions/repository_exception.dart';
 import 'package:review_provider_sqlite/app/models/task_model.dart';
 
+import '../../core/database/sqlite_connection_factory.dart';
 import './tasks_repository.dart';
 
 class TasksRepositoryImpl implements TasksRepository {

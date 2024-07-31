@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:review_provider_sqlite/app/core/database/sqlite_connection_factory.dart';
+import 'package:review_provider_sqlite/app/core/database/sqlite_connection_factory_impl.dart';
 
 class SqliteAdmConnection with WidgetsBindingObserver {
   
@@ -8,7 +8,7 @@ class SqliteAdmConnection with WidgetsBindingObserver {
 
     // Because this class is a Singleton I don't need to
     // get from the Provider.
-    final connection = SqliteConnectionFactory();
+    final connection = SqliteConnectionFactoryImpl();
 
     switch(state) {
       case AppLifecycleState.resumed:

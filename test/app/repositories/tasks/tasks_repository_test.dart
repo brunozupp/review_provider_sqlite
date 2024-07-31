@@ -4,7 +4,7 @@ import 'package:review_provider_sqlite/app/repositories/tasks/tasks_repository.d
 import 'package:review_provider_sqlite/app/repositories/tasks/tasks_repository_impl.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
-import '../core/database/sqlite_connection_factory_simulator.dart';
+import '../../core/database/sqlite_connection_factory_simulator.dart';
 
 /// When working with sqflite and my repository uses a instance of
 /// a factory class that is responsible by returning a database

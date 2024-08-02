@@ -1,16 +1,9 @@
 # review_provider_sqlite
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+In this project the following topics were reviewed:
+- Provider;
+- Sqlite (Migrations);
+- Firebase (crashlytics, authentication with google and email/password);
+- Unit tests (how to test a local database and how to use the plugin mockito);
+- Modularization and how to use it to make the project modular and with management of memory;
+- MVVM and clean arch.
